@@ -1,0 +1,17 @@
+{
+  "name": "jev-find",
+  "version": "0.1.9",
+  "private": true,
+  "type": "module",
+  "description": "Inteligentne znajdowanie na stronie w Chromium",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node scripts/check.mjs",
+    "icons": "node scripts/icons.mjs",
+    "package": "node scripts/package.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

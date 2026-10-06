@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JEV Find - strona testowa</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #1f2937;
+        background: #ffffff;
+      }
+
+      body {
+        max-width: 56rem;
+        margin: 0 auto;
+        padding: 2rem;
+        line-height: 1.6;
+      }
+
+      h1,
+      h2 {
+        line-height: 1.2;
+      }
+
+      section {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid #d1d5db;
+      }
+
+      .spacer {
+        height: 1100px;
+      }
+
+      .hidden-marker {
+        display: none;
+      }
+
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+
+      button {
+        padding: 0.5rem 0.75rem;
+        color: #111827;
+        background: #f3f4f6;
+        border: 1px solid #9ca3af;
+        border-radius: 0.375rem;
+        cursor: pointer;
+      }
+
+      textarea,
+      input {
+        display: block;
+        width: min(100%, 30rem);
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        color: #111827;
+        background: #ffffff;
+        border: 1px solid #9ca3af;
+        border-radius: 0.375rem;
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        min-height: 8rem;
+        margin-top: 1rem;
+        border: 1px solid #d1d5db;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>JEV Find - strona testowa</h1>
+      <p>Ta strona zawiera syntetyczne treści do testów wyszukiwania dosłownego i semantycznego.</p>
+    </header>
+
+    <section aria-labelledby="literal-heading">
+      <h2 id="literal-heading">Dosłowne dopasowania</h2>
+      <p id="inline">Dosłowna <strong>fraza przez</strong> <em>markup</em> działa.</p>
+
+      <div class="spacer" aria-hidden="true"></div>
+      <p id="needle-1">Pierwsza igła jest daleko pod nagłówkiem.</p>
+      <p id="needle-2">Druga igła znajduje się w osobnym akapicie.</p>
+      <p id="needle-3">Trzecia igła kończy zestaw rozdzielonych trafień.</p>
+
+      <button id="dynamic-add" type="button">Dodaj treść</button>
+      <div id="dynamic-container"></div>
+    </section>
+
+    <section aria-labelledby="semantic-heading">
+      <h2 id="semantic-heading">Treści semantyczne</h2>
+      <p id="good">[GOOD] Regeneracja organizmu wymaga spokojnego snu każdej nocy.</p>
+      <p id="new-good">[NEW] Regularne ćwiczenia poprawiają kondycję.</p>
+      <p id="maybe">[MAYBE] Artykuł wspomina o jedzeniu, lecz bez szczegółów jadłospisu.</p>
+    </section>
+
+    <section aria-labelledby="controls-heading">
+      <h2 id="controls-heading">Widoczne kontrolki</h2>
+      <p>Unicode: İSTANBUL oraz żółw.</p>
+      <p><button id="visible-action" type="button">Przycisk z tekstem widocznaakcja</button></p>
+      <p id="editable" contenteditable="true">Czytelny edytor edytowalnytekst</p>
+      <label for="fixture-textarea">Pole tekstowe</label>
+      <textarea id="fixture-textarea" rows="3">sekretnawartość</textarea>
+      <label for="fixture-input">Pole jednolinijkowe</label>
+      <input id="fixture-input" type="text" value="sekretnawartość">
+      <p id="hidden-marker" class="hidden-marker">ukrytytekst</p>
+    </section>
+
+    <section aria-labelledby="shadow-heading">
+      <h2 id="shadow-heading">Shadow DOM i ramki</h2>
+      <div id="open-shadow-host"></div>
+      <div id="hidden-shadow-host" hidden></div>
+      <iframe id="same-origin-frame" title="Ta sama domena"></iframe>
+      <iframe id="hidden-frame" title="Ukryta ramka" hidden srcdoc="<!doctype html><p>ukrytaramka</p>"></iframe>
+      <iframe id="cross-origin-frame" title="Inna domena" src="https://other.fixture.test/"></iframe>
+    </section>
+
+    <script>
+      const sameOriginFrameMarkup = `
+        <!doctype html>
+        <html lang="pl">
+          <head><meta charset="utf-8"><title>Ramka w shadow</title></head>
+          <body>
+            <p id="shadow-frame-target">Ramka w shadow zagnieżdżonaramka</p>
+            <div id="nested-shadow-host"></div>
+            <script>
+              const nestedHost = document.getElementById('nested-shadow-host');
+              const nestedRoot = nestedHost.attachShadow({ mode: 'open' });
+              nestedRoot.innerHTML = '<p id="nested-shadow-target">Zagnieżdżony cień ramki</p>';
+            <\/script>
+          </body>
+        </html>
+      `;
+
+      const openHost = document.getElementById('open-shadow-host');
+      const openRoot = openHost.attachShadow({ mode: 'open' });
+      openRoot.innerHTML = '<p id="shadow-target">Otwarty shadow cieńznaleziony</p>';
+      const shadowFrame = document.createElement('iframe');
+      shadowFrame.id = 'shadow-frame';
+      shadowFrame.title = 'Ramka w otwartym shadow DOM';
+      shadowFrame.srcdoc = sameOriginFrameMarkup;
+      openRoot.append(shadowFrame);
+
+      const hiddenHost = document.getElementById('hidden-shadow-host');
+      const hiddenRoot = hiddenHost.attachShadow({ mode: 'open' });
+      hiddenRoot.innerHTML = '<p id="hidden-shadow-target">ukrytycień</p>';
+
+      document.getElementById('same-origin-frame').srcdoc = `
+        <!doctype html>
+        <html lang="pl">
+          <head><meta charset="utf-8"><title>Dostępna ramka</title></head>
+          <body>
+            <p id="iframe-target">Dostępna ramka ramkatekst</p>
+          </body>
+        </html>
+      `;
+
+      document.getElementById('dynamic-add').addEventListener('click', () => {
+        if (document.getElementById('dynamic')) return;
+        const paragraph = document.createElement('p');
+        paragraph.id = 'dynamic';
+        paragraph.textContent = 'Nowa treść po doczytaniu';
+        document.getElementById('dynamic-container').append(paragraph);
+      });
+    </script>
+  </body>
+</html>

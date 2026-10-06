@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <!-- Separate 16 px drawing on the pixel grid: a scaled master blurs the bars at this size. -->
+  <rect width="16" height="16" rx="3.5" fill="#18171D"/>
+  <circle cx="7" cy="7" r="5" fill="none" stroke="#F1F0F5" stroke-width="2"/>
+  <path d="M11 11 13.5 13.5" fill="none" stroke="#F1F0F5" stroke-width="2" stroke-linecap="round"/>
+  <rect x="4.5" y="4" width="4" height="2" rx="1" fill="#FACC15"/>
+  <rect x="4.5" y="7" width="5.5" height="2" rx="1" fill="#A78BFA"/>
+</svg>

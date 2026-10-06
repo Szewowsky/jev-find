@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JEV Find - pasek postępu jak claude.dev</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.6;
+        color: #1f2937;
+        background: #ffffff;
+      }
+
+      #topProg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background: #c2410c;
+      }
+
+      .wrap {
+        display: grid;
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: 32px;
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .rail {
+        position: sticky;
+        top: 24px;
+        align-self: start;
+        font-size: 13px;
+      }
+
+      .rail-title { opacity: 0; }
+      .rail-title.on { opacity: 1; }
+      .rail nav a { display: block; color: #4b5563; text-decoration: none; }
+      .rail nav a.on { color: #111827; font-weight: 600; }
+      .rail .subs { display: none; }
+      .rail .subs.open { display: block; }
+      .prog { margin-top: 12px; font-family: ui-monospace, monospace; }
+      .spacer { height: 1100px; }
+
+      .art-fig {
+        margin: 2rem 0;
+        padding: 1rem;
+        border: 1px solid #d1d5db;
+      }
+
+      .art-anim {
+        display: block;
+        width: 100%;
+        height: 160px;
+        background: #111827;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mirrors claude.dev/blog/getting-started-with-claude-code-mods (October 2026): the scroll
+         handler rewrites #prog with B/text/SPAN on every frame, the figure button swaps Play/Pause
+         text from an IntersectionObserver and the rail shows sub-links of the active section. -->
+    <div id="topProg" aria-hidden="true"></div>
+    <div class="wrap">
+      <aside class="rail is-in">
+        <div id="railTitle" class="rail-title">Pasek postępu jak claude.dev</div>
+        <nav>
+          <a class="grp" href="#s1">Wstęp</a>
+          <div class="subs"><a class="sub" href="#needle-1">└Pierwsza sekcja</a></div>
+          <a class="grp" href="#s2">Środek</a>
+          <div class="subs"><a class="sub" href="#fig">└Animacja</a><a class="sub" href="#needle-2">└Druga sekcja</a></div>
+          <a class="grp" href="#s3">Koniec</a>
+          <div class="subs"><a class="sub" href="#needle-3">└Trzecia sekcja</a><a class="sub" href="#sem">└Droga</a></div>
+        </nav>
+        <div class="prog" id="prog"><b></b>░░░░░░░░░░░░░░░░░░░░░░░░░░░░<span class="pct">00%</span></div>
+        <div class="hint">PRESS <span class="arr">↑</span> / <span class="arr">↓</span> TO SCROLL</div>
+      </aside>
+      <article id="stream">
+        <h1 id="h1">Strona z paskiem postępu jak claude.dev</h1>
+        <section id="s1">
+          <p>Wstęp bez szukanego słowa.</p>
+          <div class="spacer"></div>
+          <p id="needle-1">Pierwsza igła leży w pierwszej sekcji.</p>
+        </section>
+        <section id="s2">
+          <div class="spacer"></div>
+          <figure class="art-fig" id="fig">
+            <video class="art-anim" muted playsinline aria-label="Pogoda tokenów"></video>
+            <figcaption class="cap"><b>FIG B</b><button type="button" class="art-anim-toggle" aria-label="Play Pogoda tokenów">Play</button><span>Pogoda tokenów</span></figcaption>
+          </figure>
+          <p id="needle-2">Druga igła czeka w środkowej sekcji.</p>
+        </section>
+        <section id="s3">
+          <div class="spacer"></div>
+          <p id="needle-3">Trzecia igła zamyka zestaw trafień.</p>
+          <div class="spacer"></div>
+          <p id="sem">[SEM] Ścieżka prowadzi przez las aż do schroniska.</p>
+          <div class="spacer"></div>
+        </section>
+      </article>
+    </div>
+    <script>
+      const T = document.getElementById('stream');
+      const z = document.getElementById('topProg');
+      const I = document.getElementById('prog');
+      const B = document.getElementById('h1');
+      const q = document.getElementById('railTitle');
+      const L = [...T.querySelectorAll('section')];
+      const F = [...document.querySelectorAll('.rail nav .grp')];
+      const A = [...document.querySelectorAll('.rail nav .subs')];
+      const update = () => {
+        const e = T.getBoundingClientRect().bottom + scrollY - innerHeight;
+        const t = Math.max(0, Math.min(1, scrollY / Math.max(1, e)));
+        const a = Math.round(28 * t);
+        z.style.width = `${100 * t}%`;
+        I.innerHTML = `<b>${'▓'.repeat(a)}</b>${'░'.repeat(28 - a)}<span class="pct">${String(Math.round(100 * t)).padStart(2, '0')}%</span>`;
+        let l = 0;
+        L.forEach((section, index) => { if (section.getBoundingClientRect().top < 0.4 * innerHeight) l = index; });
+        F.forEach((link, index) => link.classList.toggle('on', index === l));
+        A.forEach((subs, index) => subs.classList.toggle('open', index === l));
+        q.classList.toggle('on', B.getBoundingClientRect().bottom < 0);
+      };
+      addEventListener('scroll', update, { passive: true });
+      update();
+
+      const figures = [...document.querySelectorAll('.art-fig')].map(fig => ({
+        fig,
+        btn: fig.querySelector('.art-anim-toggle'),
+        name: fig.querySelector('.cap > span')?.textContent?.trim() || 'video',
+        playing: false
+      }));
+      const label = entry => {
+        const text = entry.playing ? 'Pause' : 'Play';
+        entry.btn.textContent = text;
+        entry.btn.setAttribute('aria-label', `${text} ${entry.name}`);
+      };
+      const observer = new IntersectionObserver(entries => {
+        for (const change of entries) {
+          const entry = figures.find(item => item.fig === change.target);
+          entry.playing = change.isIntersecting;
+          label(entry);
+        }
+      }, { threshold: 0.1 });
+      figures.forEach(entry => { label(entry); observer.observe(entry.fig); });
+    </script>
+  </body>
+</html>

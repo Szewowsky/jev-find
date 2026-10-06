@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Master for icon32, icon48 and icon128 (npm run icons). The mark from options.html on a graphite tile. -->
+  <rect width="32" height="32" rx="7" fill="#18171D"/>
+  <circle cx="14.5" cy="14.5" r="9" fill="none" stroke="#F1F0F5" stroke-width="3"/>
+  <path d="M20.5 20.5 26.5 26.5" fill="none" stroke="#F1F0F5" stroke-width="3" stroke-linecap="round"/>
+  <rect x="9.5" y="11" width="7" height="3" rx="1.5" fill="#FACC15"/>
+  <rect x="9.5" y="15" width="10" height="3" rx="1.5" fill="#A78BFA"/>
+</svg>

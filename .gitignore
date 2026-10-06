@@ -1,0 +1,12 @@
+# Allowlist: everything stays local unless listed below.
+/*
+!/.gitignore
+!/extension/
+!/scripts/
+!/tests/
+!/package.json
+!/package-lock.json
+!/INSTALL.md
+!/README.md
+!/LICENSE
+.DS_Store

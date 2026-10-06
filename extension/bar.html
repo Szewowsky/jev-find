@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>JEV Find</title>
+<link rel="stylesheet" href="bar.css">
+</head>
+<body>
+<div class="panel" role="dialog" aria-label="JEV Find">
+<div class="row">
+<span class="mark" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.6"></circle><path d="m10.4 10.4 3.1 3.1"></path></svg></span>
+<input class="query" type="search" autocomplete="off" spellcheck="false" placeholder="Słowo albo opis fragmentu" aria-label="Szukaj na stronie">
+<span class="count idle" aria-live="polite">0<i>/</i>0</span>
+<span class="sep" aria-hidden="true"></span>
+<button class="icon" data-action="prev" aria-label="Poprzednie trafienie" title="Poprzednie trafienie (↑)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 10 4-4 4 4"></path></svg></button>
+<button class="icon" data-action="next" aria-label="Następne trafienie" title="Następne trafienie (↓)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg></button>
+<span class="sep" aria-hidden="true"></span>
+<button class="icon" data-action="settings" aria-label="Otwórz ustawienia" title="Ustawienia"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 5h6M11.5 5h2M2.5 11h2M7.5 11h6"></path><circle cx="10" cy="5" r="1.5"></circle><circle cx="6" cy="11" r="1.5"></circle></svg></button>
+<button class="icon" data-action="close" aria-label="Zamknij wyszukiwanie" title="Zamknij (Esc)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 4.5 7 7m0-7-7 7"></path></svg></button>
+</div>
+<div class="progress" aria-hidden="true"></div>
+<div class="meta">
+<span class="glyph" aria-hidden="true"></span>
+<span class="status" aria-live="polite"></span>
+<span class="frames" role="img" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.2" y="3" width="11.6" height="10" rx="2"></rect><path d="M2.6 12.6 13.4 3.4"></path></svg><span class="frames-n"></span></span>
+<button class="action" data-action="action"></button>
+<span class="keys" aria-hidden="true"><kbd>↑</kbd><kbd>↓</kbd><span>wyniki</span><kbd>esc</kbd><span>zamknij</span></span>
+</div>
+</div>
+<script type="module" src="bar.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Ustawienia JEV Find</title>
+    <link rel="stylesheet" href="options.css">
+    <script type="module" src="options.js"></script>
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="hd">
+        <span class="brand" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="10.5" cy="10.5" r="7" stroke="currentColor" stroke-width="1.8" />
+            <path d="m15.7 15.7 4.6 4.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            <rect x="6.6" y="7.9" width="5.4" height="2.2" rx="1.1" fill="#FACC15" />
+            <rect x="6.6" y="11.1" width="7.6" height="2.2" rx="1.1" fill="#A78BFA" />
+          </svg>
+        </span>
+        <span class="name">JEV Find</span>
+        <span class="ver" id="version"></span>
+      </header>
+
+      <h1>Ustawienia</h1>
+      <p class="lede">Szukaj słów albo opisz fragment strony. Pasek otwierasz skrótem <span class="kk" data-shortcut><kbd>Alt</kbd><kbd>Shift</kbd><kbd>F</kbd></span></p>
+
+      <form id="settings-form" novalidate>
+        <p class="sh" id="key-heading">Wyszukiwanie po znaczeniu</p>
+        <section class="grp" aria-labelledby="key-heading">
+          <div class="row">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 16 16"><circle cx="5.2" cy="10.8" r="2.7" /><path d="m7.2 8.8 6-6M11.2 4.8l1.6 1.6M9.6 6.4l1.2 1.2" /></svg></span>
+            <span class="lbl"><b>Klucz TypeSafe</b><small>Przechowywany tylko w tej przeglądarce</small></span>
+            <span class="key-state" id="key-state" data-state="missing"><i aria-hidden="true"></i><span id="key-state-text">Brak klucza</span></span>
+          </div>
+          <div class="row col">
+            <label class="fl" for="api-key" id="api-key-label">Wklej klucz</label>
+            <div class="field">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="5.2" cy="10.8" r="2.7" /><path d="m7.2 8.8 6-6M11.2 4.8l1.6 1.6M9.6 6.4l1.2 1.2" /></svg>
+              <input id="api-key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Wklej klucz API" aria-describedby="key-help">
+            </div>
+            <p class="help" id="key-help">Klucze utworzysz w <a href="https://console.typesafe.ai/keys" target="_blank" rel="noreferrer">konsoli TypeSafe</a>. Puste pole zostawia obecny klucz.</p>
+          </div>
+          <div class="row note">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 1.9 13 3.8v3.8c0 3.1-2.1 5.5-5 6.5-2.9-1-5-3.4-5-6.5V3.8l5-1.9Z" /></svg></span>
+            <p>Tekst bieżącej strony trafia do TypeSafe dopiero po uruchomieniu JEV Find i wpisaniu zapytania. Wyszukiwanie może wiązać się z kosztem według warunków Twojego konta TypeSafe.</p>
+          </div>
+          <div class="row" id="remove-row" hidden>
+            <span class="lbl"><b>Usuń zapisany klucz</b><small>Zostanie wyszukiwanie dosłowne</small></span>
+            <button class="btn danger" id="remove-key" type="button">Usuń klucz</button>
+          </div>
+        </section>
+
+        <p class="sh" id="domains-heading">Wykluczenia</p>
+        <section class="grp" aria-labelledby="domains-heading">
+          <div class="row">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.8" /><path d="M2.2 8h11.6M8 2.2c1.7 1.6 2.5 3.6 2.5 5.8S9.7 12.2 8 13.8C6.3 12.2 5.5 10.2 5.5 8S6.3 3.8 8 2.2Z" /></svg></span>
+            <span class="lbl"><b>Wykluczone domeny</b><small>JEV Find nie uruchomi się na nich ani na ich subdomenach</small></span>
+            <span class="meta" id="domains-count" aria-label="Liczba wykluczonych domen">0</span>
+          </div>
+          <div class="row col">
+            <label class="fl" for="excluded-domains">Jedna domena w wierszu</label>
+            <textarea id="excluded-domains" rows="3" spellcheck="false" placeholder="przyklad.pl&#10;panel.przyklad.com" aria-describedby="domains-help"></textarea>
+            <p class="help" id="domains-help">Możesz wkleić cały adres strony, zostanie sama domena. Puste wiersze są pomijane.</p>
+          </div>
+        </section>
+
+        <p class="sh" id="shortcut-heading">Klawiatura</p>
+        <section class="grp" aria-labelledby="shortcut-heading">
+          <div class="row">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 16 16"><rect x="1.8" y="4" width="12.4" height="8.4" rx="1.8" /><path d="M4.6 6.8h.1M7.1 6.8h.1M9.6 6.8h.1M12 6.8h.1M5.2 9.6h5.6" /></svg></span>
+            <span class="lbl"><b>Otwórz pasek</b><small>Skrót ustawiasz w przeglądarce</small></span>
+            <span class="kk" data-shortcut><kbd>Alt</kbd><kbd>Shift</kbd><kbd>F</kbd></span>
+            <button class="btn" id="shortcut-link" type="button">Zmień</button>
+          </div>
+          <div class="row">
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 6.5 8 3.5l3 3M5 9.5l3 3 3-3" /></svg></span>
+            <span class="lbl"><b>W pasku</b></span>
+            <span class="kk"><kbd>↑</kbd><kbd>↓</kbd><span>wyniki</span><kbd>esc</kbd><span>zamknij</span></span>
+          </div>
+        </section>
+
+        <div class="save">
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+          <button class="btn primary" type="submit" disabled>Zapisz ustawienia</button>
+        </div>
+      </form>
+      <footer class="foot">Ustawienia zostają w lokalnym profilu przeglądarki.</footer>
+    </main>
+  </body>
+</html>
